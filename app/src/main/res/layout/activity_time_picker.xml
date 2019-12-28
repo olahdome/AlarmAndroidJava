@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TimePickerActivity">
+
+    <TimePicker
+        android:id="@+id/time_picker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/set_alarm_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/set_alarm_button"
+        android:layout_width="0dp"
+        app:layout_constraintHorizontal_weight="1"
+        android:layout_height="wrap_content"
+        android:onClick="setCalendar"
+        android:text="Set alarm"
+        app:layout_constraintBottom_toTopOf="@+id/textView"
+        app:layout_constraintEnd_toStartOf="@+id/reset_alarm_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/time_picker" />
+
+    <Button
+        android:id="@+id/reset_alarm_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintHorizontal_weight="1"
+        android:text="Reset alarm"
+        android:onClick="resetCalendar"
+        app:layout_constraintStart_toEndOf="@+id/set_alarm_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/time_picker"
+        app:layout_constraintBottom_toTopOf="@+id/textView"/>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/set_alarm_button" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
