@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:onClick="setCalendar"
         android:text="@string/set_alarm"
-        app:layout_constraintBottom_toTopOf="@+id/textView"
+        app:layout_constraintBottom_toTopOf="@+id/save_alarm_button"
         app:layout_constraintEnd_toStartOf="@+id/reset_alarm_button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/time_picker" />
@@ -37,17 +37,29 @@
         app:layout_constraintStart_toEndOf="@+id/set_alarm_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/time_picker"
-        app:layout_constraintBottom_toTopOf="@+id/textView"/>
+        app:layout_constraintBottom_toTopOf="@+id/save_alarm_button"/>
+
+    <Button
+        android:id="@+id/save_alarm_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/save_alarm"
+        android:onClick="saveAlarm"
+        app:layout_constraintTop_toBottomOf="@+id/set_alarm_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/alarmTextView"/>
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/alarmTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/no_alarm_set"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/set_alarm_button" />
+        app:layout_constraintTop_toBottomOf="@+id/save_alarm_button" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

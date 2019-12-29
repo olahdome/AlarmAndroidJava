@@ -12,7 +12,8 @@ public class AlarmAdapter extends BroadcastReceiver {
         //MediaPlayer mediaPlayer = MediaPlayer.create(context, Settings.System.DEFAULT_RINGTONE_URI);
         //mediaPlayer.start();
         MediaPlayerSingleton mediaPlayerSingleton = MediaPlayerSingleton.getInstance();
-        mediaPlayerSingleton.mediaPlayer = MediaPlayer.create(context, Settings.System.DEFAULT_RINGTONE_URI);
-        mediaPlayerSingleton.mediaPlayer.start();
+        //mediaPlayerSingleton.mediaPlayer = MediaPlayer.create(context, Settings.System.DEFAULT_RINGTONE_URI);
+        mediaPlayerSingleton.create(context, Settings.System.DEFAULT_RINGTONE_URI);
+        mediaPlayerSingleton.start();
     }
 }
