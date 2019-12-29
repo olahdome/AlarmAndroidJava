@@ -22,6 +22,10 @@ public class TimePickerActivity extends AppCompatActivity {
     Button setAlarmButton;
     TextView textView;
     MediaPlayerSingleton mediaPlayerSingleton;
+    int hour;
+    int minute;
+    public final static String EXTRA_HOUR = "com.example.alarm.HOUR";
+    public final static String EXTRA_MINUTE = "com.example.alarm.MINUTE";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,8 +74,8 @@ public class TimePickerActivity extends AppCompatActivity {
         if (alarmManager != null) {
             alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, timeInMillis, 60000, alarmPendingIntent);
         }
-        int hour = calendar.get(Calendar.HOUR_OF_DAY);
-        int minute = calendar.get(Calendar.MINUTE);
+        hour = calendar.get(Calendar.HOUR_OF_DAY);
+        minute = calendar.get(Calendar.MINUTE);
         Toast.makeText(TimePickerActivity.this, "Alarm set to: " + hour + ":" + minute, Toast.LENGTH_SHORT).show();
         String timeText = "Alarm set to: " + hour + ":" + minute;
         textView.setText(timeText);
@@ -117,7 +121,10 @@ public class TimePickerActivity extends AppCompatActivity {
      */
 
     public void saveAlarm(View view) {
-        //Intent mainActivityintent = new Intent();
+        Intent mainActivityintent = new Intent(TimePickerActivity.this, MainActivity.class);
+        mainActivityintent.putExtra(EXTRA_HOUR, hour);
+        mainActivityintent.putExtra(EXTRA_MINUTE, minute);
+        startActivity(mainActivityintent);
     }
 
     /*

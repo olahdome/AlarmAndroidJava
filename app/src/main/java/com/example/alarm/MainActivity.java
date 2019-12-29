@@ -12,6 +12,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import java.sql.Time;
 
@@ -35,6 +36,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        Intent intent = getIntent();
+        int hour = intent.getIntExtra(TimePickerActivity.EXTRA_HOUR, 0);
+        int minute = intent.getIntExtra(TimePickerActivity.EXTRA_MINUTE, 0);
+        Toast.makeText(this, "Alarm set for: " + hour + ":" + minute,Toast.LENGTH_LONG).show();
     }
 
     @Override
