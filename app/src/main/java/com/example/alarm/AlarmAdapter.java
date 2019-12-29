@@ -9,7 +9,10 @@ import android.provider.Settings;
 public class AlarmAdapter extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-        MediaPlayer mediaPlayer = MediaPlayer.create(context, Settings.System.DEFAULT_RINGTONE_URI);
-        mediaPlayer.start();
+        //MediaPlayer mediaPlayer = MediaPlayer.create(context, Settings.System.DEFAULT_RINGTONE_URI);
+        //mediaPlayer.start();
+        MediaPlayerSingleton mediaPlayerSingleton = MediaPlayerSingleton.getInstance();
+        mediaPlayerSingleton.mediaPlayer = MediaPlayer.create(context, Settings.System.DEFAULT_RINGTONE_URI);
+        mediaPlayerSingleton.mediaPlayer.start();
     }
 }

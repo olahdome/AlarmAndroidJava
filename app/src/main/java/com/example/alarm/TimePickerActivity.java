@@ -76,9 +76,10 @@ public class TimePickerActivity extends AppCompatActivity {
         }
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         int minute = calendar.get(Calendar.MINUTE);
-        Toast.makeText(TimePickerActivity.this, "Alarm set to: " + hour + " " + minute, Toast.LENGTH_SHORT).show();
+        Toast.makeText(TimePickerActivity.this, "Alarm set to: " + hour + ":" + minute, Toast.LENGTH_SHORT).show();
         String timeText = "Alarm set to: " + hour + ":" + minute;
         textView.setText(timeText);
+        //Intent mainActivityintent
         /*
         int ampm = calendar.get(Calendar.AM_PM);
         String day = "";
@@ -94,13 +95,15 @@ public class TimePickerActivity extends AppCompatActivity {
          */
     }
 
-    public void resetCalendar(View view) {
+    public void clearAlarm(View view) {
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(TimePickerActivity.this, AlarmAdapter.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(TimePickerActivity.this, 0, intent, 0);
         if (alarmManager != null) {
             alarmManager.cancel(pendingIntent);
         }
+        Toast.makeText(TimePickerActivity.this, "Alarm has been cleared", Toast.LENGTH_SHORT).show();
+        textView.setText(getString(R.string.no_alarm_set));
         //tv_display.setText("Alarm not set");
     }
     /*
