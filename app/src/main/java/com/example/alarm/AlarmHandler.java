@@ -6,6 +6,19 @@ import android.content.Context;
 import android.content.Intent;
 
 public class AlarmHandler {
+
+    boolean isSet = false;
+
+    public void setAlarm(Context context, long timeInMillis, int repeatInMillis){
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        Intent alarmIntent = new Intent(context, AlarmAdapter.class);
+        PendingIntent alarmPendingIntent = PendingIntent.getBroadcast(
+                context, 0, alarmIntent, 0);
+        if (alarmManager != null) {
+            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, timeInMillis, repeatInMillis, alarmPendingIntent);
+        }
+    }
+
     public void stopAlarm(){
         MediaPlayerSingleton mediaPlayerSingleton = MediaPlayerSingleton.getInstance();
         if (mediaPlayerSingleton.mediaPlayer != null) {

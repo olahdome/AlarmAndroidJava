@@ -10,6 +10,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -21,7 +22,9 @@ public class TimePickerActivity extends AppCompatActivity {
     TimePicker timePicker;
     Button setAlarmButton;
     TextView textView;
-    MediaPlayerSingleton mediaPlayerSingleton;
+    //MediaPlayerSingleton mediaPlayerSingleton;
+    EditText editText;
+    AlarmHandler alarmHandler;
     int hour;
     int minute;
     public final static String EXTRA_HOUR = "com.example.alarm.HOUR";
@@ -35,7 +38,9 @@ public class TimePickerActivity extends AppCompatActivity {
         timePicker = findViewById(R.id.time_picker);
         setAlarmButton = findViewById(R.id.set_alarm_button);
         textView = findViewById(R.id.alarmTextView);
+        editText = findViewById(R.id.repeat_time_ET);
         timePicker.setIs24HourView(true);
+        alarmHandler = new AlarmHandler();
     }
 
     public void setCalendar(View view) {
@@ -63,22 +68,40 @@ public class TimePickerActivity extends AppCompatActivity {
         //int minute = calendar.get(Calendar.MINUTE);
         //Toast.makeText(getApplicationContext(), hour + " " + minute + " " + calendar.getTimeInMillis(), Toast.LENGTH_LONG).show();
 
-        setAlarm(calendar.getTimeInMillis(), calendar);
+        setAlarm(calendar);
     }
 
-    private void setAlarm(long timeInMillis, Calendar calendar) {
+    private void setAlarm(Calendar calendar) {
+        long timeInMillis = calendar.getTimeInMillis();
+        String repeatTimeString = editText.getText().toString();
+        int repeatTime = 0;
+        try {
+            repeatTime = Integer.parseInt(repeatTimeString);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+        if (repeatTime != 0) {
+            alarmHandler.setAlarm(TimePickerActivity.this, timeInMillis, repeatTime*60000);
+            alarmHandler.isSet = true;
+            hour = calendar.get(Calendar.HOUR_OF_DAY);
+            minute = calendar.get(Calendar.MINUTE);
+            String timeText = "Alarm set to: " + hour + ":" + minute;
+            Toast.makeText(TimePickerActivity.this, timeText, Toast.LENGTH_SHORT).show();
+            textView.setText(timeText);
+        }
+        else {
+            Toast.makeText(TimePickerActivity.this, "Write repeat interval in minutes", Toast.LENGTH_LONG).show();
+        }
+
+        /*
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent alarmIntent = new Intent(TimePickerActivity.this, AlarmAdapter.class);
         PendingIntent alarmPendingIntent = PendingIntent.getBroadcast(
                 TimePickerActivity.this, 0, alarmIntent, 0);
         if (alarmManager != null) {
             alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, timeInMillis, 60000, alarmPendingIntent);
-        }
-        hour = calendar.get(Calendar.HOUR_OF_DAY);
-        minute = calendar.get(Calendar.MINUTE);
-        Toast.makeText(TimePickerActivity.this, "Alarm set to: " + hour + ":" + minute, Toast.LENGTH_SHORT).show();
-        String timeText = "Alarm set to: " + hour + ":" + minute;
-        textView.setText(timeText);
+        }*/
+
         /*
         int ampm = calendar.get(Calendar.AM_PM);
         String day = "";
@@ -95,11 +118,16 @@ public class TimePickerActivity extends AppCompatActivity {
     }
 
     public void clearAlarm(View view) {
-        AlarmHandler alarmHandler = new AlarmHandler();
-        alarmHandler.stopAlarm();
-        alarmHandler.cancelAlarm(TimePickerActivity.this);
-        Toast.makeText(TimePickerActivity.this, "Alarm has been cleared", Toast.LENGTH_SHORT).show();
-        textView.setText(getString(R.string.no_alarm_set));
+        if (alarmHandler.isSet) {
+            alarmHandler.stopAlarm();
+            alarmHandler.cancelAlarm(TimePickerActivity.this);
+            alarmHandler.isSet = false;
+            Toast.makeText(TimePickerActivity.this, "Alarm has been cleared", Toast.LENGTH_SHORT).show();
+            textView.setText(getString(R.string.no_alarm_set));
+        }
+        else{
+            Toast.makeText(TimePickerActivity.this, "No alarm set", Toast.LENGTH_SHORT).show();
+        }
     }
 
     /*public void stopAlarm(){
@@ -121,10 +149,15 @@ public class TimePickerActivity extends AppCompatActivity {
      */
 
     public void saveAlarm(View view) {
-        Intent mainActivityintent = new Intent(TimePickerActivity.this, MainActivity.class);
-        mainActivityintent.putExtra(EXTRA_HOUR, hour);
-        mainActivityintent.putExtra(EXTRA_MINUTE, minute);
-        startActivity(mainActivityintent);
+        if (alarmHandler.isSet) {
+            Intent mainActivityintent = new Intent(TimePickerActivity.this, MainActivity.class);
+            mainActivityintent.putExtra(EXTRA_HOUR, hour);
+            mainActivityintent.putExtra(EXTRA_MINUTE, minute);
+            startActivity(mainActivityintent);
+        }
+        else {
+            Toast.makeText(TimePickerActivity.this, "Please set the alarm", Toast.LENGTH_LONG).show();
+        }
     }
 
     /*
