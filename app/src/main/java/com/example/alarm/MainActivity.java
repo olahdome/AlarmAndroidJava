@@ -8,21 +8,38 @@ import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.CompoundButton;
+import android.widget.RadioGroup;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import java.sql.Time;
+import java.util.ArrayList;
+import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements AlarmRecyclerViewAdapter.ItemClickListener{
+
+    AlarmRecyclerViewAdapter adapter;
+    ArrayList<String> setTime;
+    String time;
+    AlarmHandler alarmHandler;
+    //static int insertIndex = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        RecyclerView recyclerView = findViewById(R.id.alarm_recycler);
         Toolbar toolbar = findViewById(R.id.toolbar);
+        setTime = AlarmDataSingleton.getInstance().setTimeList;
+        alarmHandler = new AlarmHandler();
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -37,10 +54,44 @@ public class MainActivity extends AppCompatActivity {
         });
 
         Intent intent = getIntent();
-        int hour = intent.getIntExtra(TimePickerActivity.EXTRA_HOUR, 0);
-        int minute = intent.getIntExtra(TimePickerActivity.EXTRA_MINUTE, 0);
-        Toast.makeText(this, "Alarm set for: " + hour + ":" + minute,Toast.LENGTH_LONG).show();
+        String hour = intent.getStringExtra(TimePickerActivity.EXTRA_HOUR);
+        String minute = intent.getStringExtra(TimePickerActivity.EXTRA_MINUTE);
+        boolean isSet = intent.getBooleanExtra(TimePickerActivity.EXTRA_IS_SET, false);
+        time = hour + ":" + minute;
+        //setTimeList.add(time);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new AlarmRecyclerViewAdapter(this, setTime);
+        adapter.setClickListener(this);
+        recyclerView.setAdapter(adapter);
+        if (isSet){
+            Toast.makeText(this, "Alarm set for: " + hour + ":" + minute,Toast.LENGTH_LONG).show();
+            insertSingleItem();
+        }
     }
+
+    @Override
+    public void onItemClick(View view, int position) {
+        Toast.makeText(this, "You clicked " + adapter.getItem(position) + " on row number " + position, Toast.LENGTH_SHORT).show();
+    }
+
+    private void insertSingleItem() {
+        setTime.add(time);
+        int insertIndex = setTime.size()-1;
+        adapter.notifyItemInserted(insertIndex);
+    }
+
+    public void sleepAlarm(View view){
+        alarmHandler.stopAlarm();
+    }
+
+    public void offAlarm(View view){
+        alarmHandler.stopAlarm();
+        alarmHandler.cancelAlarm(MainActivity.this);
+        alarmHandler.isSet = false;
+    }
+    /*public void insert(View view) {
+        insertSingleItem();
+    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -63,4 +114,6 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
 }

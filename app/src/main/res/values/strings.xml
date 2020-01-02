@@ -6,4 +6,6 @@
     <string name="reset_alarm">Reset alarm</string>
     <string name="save_alarm">Save alarm</string>
     <string name="repeat_time_in_minutes">Repeat time in minutes...</string>
+    <string name="sleep_alarm">Sleep alarm</string>
+    <string name="off_alarm">Off alarm</string>
 </resources>
