@@ -4,32 +4,30 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.CompoundButton;
-import android.widget.RadioGroup;
-import android.widget.Switch;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
-import java.sql.Time;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Calendar;
 
-public class MainActivity extends AppCompatActivity implements AlarmRecyclerViewAdapter.ItemClickListener{
+public class MainActivity extends AppCompatActivity implements
+        AlarmRecyclerViewAdapter.ItemClickListener,TimePickerFragment.OnTimeDialogListener{
 
     AlarmRecyclerViewAdapter adapter;
     ArrayList<String> setTime;
     String time;
     AlarmHandler alarmHandler;
+    int position;
     //static int insertIndex = 0;
 
     @Override
@@ -71,7 +69,10 @@ public class MainActivity extends AppCompatActivity implements AlarmRecyclerView
 
     @Override
     public void onItemClick(View view, int position) {
-        Toast.makeText(this, "You clicked " + adapter.getItem(position) + " on row number " + position, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "You clicked " + adapter.getItem(position) + " on row number " + position, Toast.LENGTH_SHORT).show();
+        this.position = position;
+        DialogFragment newFragment = new TimePickerFragment();
+        newFragment.show(getSupportFragmentManager(), "timePicker");
     }
 
     private void insertSingleItem() {
@@ -108,12 +109,34 @@ public class MainActivity extends AppCompatActivity implements AlarmRecyclerView
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_navigation) {
+            Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+            startActivity(intent);
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+        String newTime = hourOfDay + ":" + minute;
+        setTime.set(position, newTime);
+        adapter.notifyItemChanged(position);
+        setAlarmTime(hourOfDay, minute);
+    }
 
+    private void setAlarmTime(int hour, int minute) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(
+                    calendar.get(Calendar.YEAR),
+                    calendar.get(Calendar.MONTH),
+                    calendar.get(Calendar.DAY_OF_MONTH),
+                    hour,
+                    minute,
+                    0
+        );
+        alarmHandler.setAlarm(MainActivity.this,calendar.getTimeInMillis(),60000);
+        alarmHandler.isSet = true;
+    }
 }

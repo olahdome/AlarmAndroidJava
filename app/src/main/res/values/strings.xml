@@ -5,7 +5,19 @@
     <string name="set_alarm">Set alarm</string>
     <string name="reset_alarm">Reset alarm</string>
     <string name="save_alarm">Save alarm</string>
-    <string name="repeat_time_in_minutes">Repeat time in minutes...</string>
+    <string name="repeat_time_in_minutes">Repeat time in minutes…</string>
     <string name="sleep_alarm">Sleep alarm</string>
     <string name="off_alarm">Off alarm</string>
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync application periodically</string>
 </resources>

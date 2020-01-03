@@ -10,9 +10,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:textSize="30sp"/>
+        android:textSize="70sp"/>
 
-    <LinearLayout
+    <!--<LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -35,7 +35,7 @@
 
 
 
-    </LinearLayout>
+    </LinearLayout>-->
 
 
 
