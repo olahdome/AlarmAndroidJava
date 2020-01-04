@@ -16,6 +16,8 @@
         android:id="@+id/time_picker"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:headerBackground="@color/colorPrimary"
+        android:numbersSelectorColor="@color/colorPrimary"
         app:layout_constraintBottom_toTopOf="@+id/repeat_time_ET"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -33,35 +35,50 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/set_alarm_button"
         android:layout_width="0dp"
         app:layout_constraintHorizontal_weight="1"
         android:layout_height="wrap_content"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:textColor="@color/colorPrimary"
+        app:strokeColor="@color/colorPrimary"
         android:onClick="setCalendar"
         android:text="@string/set_alarm"
+        android:insetLeft="4dp"
+        android:insetRight="4dp"
         app:layout_constraintBottom_toTopOf="@+id/save_alarm_button"
         app:layout_constraintEnd_toStartOf="@+id/reset_alarm_button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/repeat_time_ET"/>
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/reset_alarm_button"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
         app:layout_constraintHorizontal_weight="1"
+        android:layout_height="wrap_content"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:textColor="@color/colorPrimary"
+        app:strokeColor="@color/colorPrimary"
         android:onClick="clearAlarm"
         android:text="@string/reset_alarm"
+        android:insetLeft="4dp"
+        android:insetRight="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/set_alarm_button"
         app:layout_constraintTop_toTopOf="@id/set_alarm_button"
         app:layout_constraintBottom_toBottomOf="@id/set_alarm_button"/>
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/save_alarm_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        style="@style/Widget.MaterialComponents.Button"
+        android:textColor="@color/colorTextWhite"
+        android:backgroundTint="@color/colorPrimary"
         android:text="@string/save_alarm"
+        android:insetLeft="4dp"
+        android:insetRight="4dp"
         android:onClick="saveAlarm"
         app:layout_constraintTop_toBottomOf="@+id/set_alarm_button"
         app:layout_constraintStart_toStartOf="parent"
@@ -79,8 +96,9 @@
         app:layout_constraintTop_toBottomOf="@+id/save_alarm_button"
         android:textSize="30sp"
         android:gravity="center"
-        android:background="@color/colorAccent"
+        android:background="@color/colorPrimaryLight"
         android:textColor="@color/colorTextWhite"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
 
 

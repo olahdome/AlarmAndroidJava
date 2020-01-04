@@ -8,6 +8,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.DialogFragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -28,6 +29,7 @@ public class MainActivity extends AppCompatActivity implements
     String time;
     AlarmHandler alarmHandler;
     int position;
+    LinearLayoutManager layoutManager;
     //static int insertIndex = 0;
 
     @Override
@@ -44,8 +46,6 @@ public class MainActivity extends AppCompatActivity implements
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();*/
                 Intent intent = new Intent(MainActivity.this, TimePickerActivity.class);
                 startActivity(intent);
             }
@@ -56,10 +56,13 @@ public class MainActivity extends AppCompatActivity implements
         String minute = intent.getStringExtra(TimePickerActivity.EXTRA_MINUTE);
         boolean isSet = intent.getBooleanExtra(TimePickerActivity.EXTRA_IS_SET, false);
         time = hour + ":" + minute;
-        //setTimeList.add(time);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
         adapter = new AlarmRecyclerViewAdapter(this, setTime);
         adapter.setClickListener(this);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
+                layoutManager.getOrientation());
+        recyclerView.addItemDecoration(dividerItemDecoration);
         recyclerView.setAdapter(adapter);
         if (isSet){
             Toast.makeText(this, "Alarm set for: " + hour + ":" + minute,Toast.LENGTH_LONG).show();
@@ -90,9 +93,6 @@ public class MainActivity extends AppCompatActivity implements
         alarmHandler.cancelAlarm(MainActivity.this);
         alarmHandler.isSet = false;
     }
-    /*public void insert(View view) {
-        insertSingleItem();
-    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

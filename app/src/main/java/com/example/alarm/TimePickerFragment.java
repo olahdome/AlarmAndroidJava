@@ -1,18 +1,18 @@
 package com.example.alarm;
 
-import android.app.Dialog;
-import android.app.TimePickerDialog;
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.text.format.DateFormat;
-import android.widget.TimePicker;
+        import android.app.Dialog;
+        import android.app.TimePickerDialog;
+        import android.content.Context;
+        import android.content.Intent;
+        import android.os.Bundle;
+        import android.text.format.DateFormat;
+        import android.widget.TimePicker;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.DialogFragment;
+        import androidx.annotation.NonNull;
+        import androidx.annotation.Nullable;
+        import androidx.fragment.app.DialogFragment;
 
-import java.util.Calendar;
+        import java.util.Calendar;
 
 public class TimePickerFragment extends DialogFragment implements TimePickerDialog.OnTimeSetListener {
 
@@ -41,8 +41,9 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
         int hour = c.get(Calendar.HOUR_OF_DAY);
         int minute = c.get(Calendar.MINUTE);
         // Create a new instance of TimePickerDialog and return it
+        //TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(), this, hour, minute,true);
         return new TimePickerDialog(getActivity(), this, hour, minute,true);
-                //DateFormat.is24HourFormat(getActivity()));
+        //DateFormat.is24HourFormat(getActivity()));
     }
 
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {

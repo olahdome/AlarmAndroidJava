@@ -22,7 +22,6 @@ public class TimePickerActivity extends AppCompatActivity {
     TimePicker timePicker;
     Button setAlarmButton;
     TextView textView;
-    //MediaPlayerSingleton mediaPlayerSingleton;
     EditText editText;
     AlarmHandler alarmHandler;
     int hour;

@@ -12,9 +12,7 @@ public class MediaPlayerSingleton {
 
     public MediaPlayer mediaPlayer;
     // private constructor restricted to this class itself
-    private MediaPlayerSingleton() {
-        //mediaPlayer = MediaPlayer.create(context, Settings.System.DEFAULT_RINGTONE_URI);
-    }
+    private MediaPlayerSingleton() {}
 
     // static method to create instance of Singleton class
     public static MediaPlayerSingleton getInstance() {
